@@ -68,7 +68,7 @@
                                 <div class="header-top-menu">
                                     <ul class="list-wrap">
                                         @if(auth('cus')->check())
-                                        <li><a href="{{ route('account.profile') }}">Hi {{ auth('cus')->user()->name }}</a></li>
+                                        <li><a href="{{ route('account.profilemain') }}">Hi {{ auth('cus')->user()->name }}</a></li>
                                             <li><a href="{{ route('account.change_password') }}">Change Password</a></li>
                                             <li><a href="{{ route('account.favorite') }}">Favorites</a></li>
                                             <li><a href="{{ route('order.history') }}">My Orders</a></li>

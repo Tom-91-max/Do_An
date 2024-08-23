@@ -48,6 +48,7 @@ Route::post('/comment/{blog_id}', [HomeController::class, 'post_comment'])->name
 Route::post('/contact', [HomeController::class, 'post_contact']);
 
 
+
 Route::group(['prefix' => 'account'], function() {
 
     Route::get('/login', [AccountController::class, 'login'])->name('account.login');
@@ -62,6 +63,9 @@ Route::group(['prefix' => 'account'], function() {
     Route::group(['middleware' => 'customer'], function() {
         Route::get('/profile', [AccountController::class, 'profile'])->name('account.profile');
         Route::post('/profile', [AccountController::class, 'check_profile']);
+
+        Route::get('/profilemain', [AccountController::class, 'profilemain'])->name('account.profilemain');
+        Route::post('/profilemain', [AccountController::class, 'check_profilemain']);
 
         Route::get('/change-password', [AccountController::class, 'change_password'])->name('account.change_password');
         Route::post('/change-password', [AccountController::class, 'check_change_password']);

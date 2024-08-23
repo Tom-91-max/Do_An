@@ -142,8 +142,12 @@ class AccountController extends Controller
         $auth = auth('cus')->user();
         return view('account.profile', compact('auth'));
     }
-
-    public function check_profile(Request $req) {
+    //profile
+    public function profilemain() {
+        $auth = auth('cus')->user();
+        return view('account.profilemain', compact('auth'));
+    }
+    public function check_profilemain(Request $req) {
         $auth = auth('cus')->user();
         $req->validate([
             'name' => 'required|min:6|max:100',
@@ -165,6 +169,32 @@ class AccountController extends Controller
             return redirect()->back()->with('ok','Update your profile successfuly');
         }
         return redirect()->back()->with('no','Something error, please check agian');
+
+    }
+
+    //profile-main
+    public function check_profile(Request $req) {
+        $auth = auth('cus')->user();
+        // $req->validate([
+        //     'name' => 'required|min:6|max:100',
+        //     'email' => 'required|email|min:6|max:100|unique:customers,email,'.$auth->id,
+        //     'password' => ['required', function($attr, $value, $fail) use($auth) {
+        //         if (!Hash::check($value, $auth->password)) {
+        //             return $fail('Your password í not mutch');
+        //         }
+        //     }],
+        // ], [
+        //     'name.required' => 'Họ tên không được để tróng',
+        //     'name.min' => 'Họ ten tối thiểu là 6 ký tự'
+        // ]);
+
+        // $data = $req->only('name','email','phone','address','gender');
+
+        // $check = $auth->update($data);
+        // if ($check) {
+        //     return redirect()->back()->with('ok','Update your profile successfuly');
+        // }
+        // return redirect()->back()->with('no','Something error, please check agian');
 
     }
 

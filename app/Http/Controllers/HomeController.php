@@ -25,10 +25,6 @@ class HomeController extends Controller
         // dd ($news_products);
         return view('home.index', compact('topBanner','gallerys','news_products','sale_products','feature_products', 'lastest_news'));
     }
-
-    public function about() {
-        return view('home.about');
-    }
     public function category (Category $cat)   {
         $products = Product::paginate(9);
        // dd($cat);
