@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommentController as AdminCommentController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
@@ -118,6 +119,7 @@ Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function() {
     Route::resource('customer', AdminCustomerController::class);
     Route::resource('comment', AdminCommentController::class);
     Route::resource('blog', AdminBlogController::class);
+    Route::resource('blog', ContactController::class);
 });
 
 
