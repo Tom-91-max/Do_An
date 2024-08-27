@@ -1,5 +1,5 @@
 @extends('master.admin')
-@section('title', 'Comment manager')
+@section('title', 'Contact manager')
 @section('main')
 
 <form action="" method="GET" class="form-inline" role="form">
@@ -44,16 +44,20 @@
         @foreach ($data as $model)
         <tr>
             <td>{{ $model->id }}</td>
-            <td>{{ $model->prod->name }}</td>
-            <td>{{ $model->custm->name }}</td>
-            <td>{{ $model->comment}} </td>
-            <td>{{ $model->created_at->format('d/m/y') }}</td>
+            <td>{{ $model->name }}</td>
+            <td>{{ $model->email }}</td>
+            <td>{{ $model->subject }}</td>
+            <td>{{ $model->message}} </td>
+            <td>{{ $model->status == 0 ? "Chưa Đọc" : "Đã Đọc"}}</td>
             
             <td class="text-right">
-                <form action="{{ route('comment.destroy', $model->id) }}" method="post">
+                <form action="{{ route('contact.destroy', $model->id) }}" method="post">
                     @csrf @method('DELETE')
-                    <!-- <a href="{{ route('comment.edit', $model->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a> -->
                     <button class="btn btn-sm btn-danger" onclick="return confirm('Are you suere wanto delete it?')"><i class="fa fa-trash"></i></button>
+                </form>
+                <form action="{{ route('contact.update', $model->id) }}" method="post">
+                    @csrf @method('put')
+                    <button class="btn btn-sm btn-primary"><i class="fa-eye"></i></button>
                 </form>
             </td>
         </tr>

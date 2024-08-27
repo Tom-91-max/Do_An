@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" href="ad_assets/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="ad_assets/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="https://fontawesome.com/icons/eye?f=classic&s=solid">
 @yield('css')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -136,7 +137,14 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('comment.index') }}"><i class="fa fa-circle-o"></i> List</a></li>
-            <li><a href="{{ route('comment.create') }}"><i class="fa fa-circle-o"></i> Add new</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+          <i class="fa fa-comment"></i> <span>Contact</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('contact.index') }}"><i class="fa fa-circle-o"></i> List</a></li>
           </ul>
         </li>
         <li class="treeview">

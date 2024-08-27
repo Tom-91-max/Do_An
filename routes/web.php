@@ -126,8 +126,8 @@ Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function() {
     Route::resource('banner', BannerController::class);
     Route::resource('customer', AdminCustomerController::class);
     Route::resource('comment', AdminCommentController::class);
+    Route::resource('contact', ContactController::class);
     Route::resource('blog', AdminBlogController::class);
-    Route::resource('blog', ContactController::class);
 });
 
 
