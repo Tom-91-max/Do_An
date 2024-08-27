@@ -35,6 +35,7 @@
                                     <div class="blog-thumb">
                                         <img src="uploads/blog/{{$blog->image}}" alt="">
                                     </div>
+                                    
                                     <div class="blog-content blog-details-content">
                                         
                                         <h2 class="title">{{$blog->name}}</h2>
@@ -42,13 +43,22 @@
                                     </div>
                                 </div>
                                 <h3 class="comment-reply-title">Comment</h3>
-                                @foreach ($comments as $comm)
+                                @foreach ($comments as $comm)                                  
                                 <div class="blog-avatar-wrap">
                                     <div class="blog-avatar-info">
                                         <h4 class="name">{{$comm->custm->name}}</h4>
                                         <p>{{ $comm->comment}}</p>
+                                        <a href="{{ route('home.comment.edit', $comm->id) }}" class="btn btn-primary btn-sm">Sửa</a>
+                                        <form action="{{ route('home.comment.delete', $comm->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                                        </form>
                                     </div>
+                                    
+                                    
                                 </div>
+                                
                                @endforeach
                                 <div class="comment-respond">
                                     <h3 class="comment-reply-title">Leave A Comment</h3>

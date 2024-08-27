@@ -105,5 +105,38 @@ class HomeController extends Controller
         }
         return redirect()->back();
     }
+//
+
+public function delete_comment($id) {
+    $comment = Comment::find($id);
+
+    if ($comment) {
+        $comment->delete();
+    }
+
+    return redirect()->back();
+}
+
+public function edit_comment($id) {
+    $comment = Comment::find($id);
+    
+    if ($comment) {
+        return view('home.edit_comment', compact('comment'));
+    }
+
+    return redirect()->back();
+}
+
+public function update_comment(Request $request, $id) {
+    $comment = Comment::find($id);
+
+    if ($comment) {
+        $comment->comment = $request->input('comment');
+        $comment->save();
+    }
+
+    return redirect()->route('home.blog_details', ['blog' => $comment->blog_id]);
+}
+
 
 }

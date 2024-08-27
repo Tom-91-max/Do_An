@@ -48,6 +48,14 @@ Route::get('/favorite/{product}', [HomeController::class, 'favorite'])->name('ho
 Route::post('/comment/{blog_id}', [HomeController::class, 'post_comment'])->name('home.comment');
 Route::post('/contact', [HomeController::class, 'post_contact']);
 
+// Route to delete a comment
+Route::delete('/comment/{id}', [HomeController::class, 'delete_comment'])->name('home.comment.delete');
+
+// Route to edit a comment
+Route::get('/comment/{id}/edit', [HomeController::class, 'edit_comment'])->name('home.comment.edit');
+Route::post('/comment/{id}/update', [HomeController::class, 'update_comment'])->name('home.comment.update');
+
+
 
 
 Route::group(['prefix' => 'account'], function() {
