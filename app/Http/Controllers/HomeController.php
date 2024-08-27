@@ -17,17 +17,21 @@ class HomeController extends Controller
     public function index() {
         $topBanner = Banner::getBanner()->first();
         $gallerys = Banner::getBanner('gallery')->get();
-
         $news_products = Product::orderBy('created_at', 'DESC')->limit(2)->get();
         $sale_products = Product::orderBy('created_at', 'DESC')->where('sale_price','>', 0)->limit(3)->get();
         $feature_products = Product::inRandomOrder()->limit(4)->get();
         $lastest_news = Blog::orderBy('created_at', 'DESC')->limit(3)->get();
-        // dd ($news_products);
+        
+        $key = request('keyword');
+        if($key){
+            $query = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+            return view('home.category', compact('query'));
+        }
+
         return view('home.index', compact('topBanner','gallerys','news_products','sale_products','feature_products', 'lastest_news'));
     }
     public function category (Category $cat)   {
         $products = Product::paginate(9);
-       // dd($cat);
         if($cat->id){
             $products = $cat->products()->paginate(9);
         }

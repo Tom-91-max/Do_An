@@ -117,6 +117,7 @@ Create table comments
     customer_id int NOT NULL,
     blog_id int NOT NULL,
     comment text,
+    status tinyint(1) DEFAULT '0', 
     created_at date DEFAULT current_timestamp(),
     updated_at date null,
     FOREIGN KEY (customer_id) REFERENCES customers(id),
@@ -172,6 +173,18 @@ Create table order_details
     FOREIGN KEY (order_id) REFERENCES orders(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
+
+
+CREATE TABLE `contacts` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `email` varchar(100) DEFAULT NULL,
+  `subject` varchar(100) DEFAULT NULL,
+  `message` text DEFAULT NULL,
+  `created_at` date DEFAULT current_timestamp(),
+  `updated_at` date DEFAULT NULL
+)
 
 INSERT INTO banners(name, image, link, status) VALUES
 ('My shop', 'banner_bg.png', '#', 1) ;
