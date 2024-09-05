@@ -37,7 +37,7 @@
                                 </a>
                             </div>
                         </div>
-                        <ul class="nav nav-tabs">   
+                        <ul class="nav nav-tabs">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link">
                                     <img class="thumb-image" src="uploads/product/{{$product->image}}" alt="" width="125px">
@@ -55,26 +55,19 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="shop-details-content">
+                    <div class="shop-details-content ">
                         <h2 class="title">{{ $product->name }}</h2>
-                        
-                        </div>
-                        <h3 class="price">${{ number_format($product->price) }} <span>- {{ $product->status == 1 ? 'In stock' : 'Out stock' }}</span></h3>
-                        
+                        <h3 class="price">{{ number_format($product->price) }} VND <span>- {{ $product->status == 1 ? 'In stock' : 'Out stock' }}</span></h3>
                         <div class="shop-details-qty">
-                            <span class="title">Quantity :</span>
-                            <div class="shop-details-qty-inner">
-                                <form action="#">
-                                    <div class="cart-plus-minus">
-                                        <input type="text" value="1">
-                                    </div>
-                                </form>
-                                <a href="{{ route('cart.add', $product->id) }}" class="purchase-btn">ADD TO CART</a>
+                            <div class="shop-details-qty-inner col-lg-5">
+                                <input type="hidden" name="product_id" class="product_id" value="{{$product->id}}">
+                                <button style="border: none; background-color: red; color: #fff; border-radius: 20px 20px; padding: 10px 15px 10px 15px;" class="add_to_cart" class="purchase-btn"><i class="fa fa-shopping-cart"></i> ADD TO CART</button>
                             </div>
                         </div>
-                        
+
                         <div class="shop-add-Wishlist">
-                            <a href="#"><i class="far fa-heart"></i>Add to Wishlist</a>
+                            <input type="hidden" name="product_id" class="product_id" value="{{$product->id}}">
+                            <button style="border: none; background-color: red; color: #fff; border-radius: 10px 10px;" class="add_to_heart" ><i class="far fa-heart"></i>Add to Wishlist</button>
                         </div>
                         <div class="sd-category">
                             <span class="title">CATEGORY:</span>
@@ -92,7 +85,6 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description-tab-pane" type="button" role="tab" aria-controls="description-tab-pane" aria-selected="true">Description</button>
                             </li>
-                            
                         </ul>
                         <div class="tab-content justify-content-center" id="descriptionTabContent">
                             <div class="tab-pane fade show active" id="description-tab-pane" role="tabpanel" aria-labelledby="description-tab" tabindex="0">
@@ -100,7 +92,6 @@
                                     {!! $product->description !!}
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -131,7 +122,7 @@
                             </div>
                             <div class="product-content-three">
                                 <h2 class="title"><a href="{{route('home.product', $prd->id)}}">{{ $prd->name}}</a></h2>
-                                <h2 class="price">{{ $prd->price}}</h2>
+                                <h2 class="price">{{ number_format($prd->price) }} VND </h2>
                             </div>
                             <div class="product-shape-two">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 303 445" preserveAspectRatio="none">
@@ -153,14 +144,43 @@
 
 @section('js')
 <script>
+    $(document).on('click', 'button.add_to_cart', function() {
+        let prd_id = $(this).closest('.shop-details-qty-inner').find('input.product_id').val();
+        let url = "{{ route('cart.add', ':prd_id') }}".replace(':prd_id', prd_id);
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                updateCart(); 
+            })
+            .catch(error => console.error('Error:', error));
+    });
+    $(document).on('click', 'button.add_to_heart', function() {
+        let prd_id = $(this).closest('.shop-add-Wishlist').find('input.product_id').val();
+        let url = "{{ route('cart.update', ':prd_id') }}".replace(':prd_id', prd_id);
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                updateCart(); // Làm mới giỏ hàng
+            })
+            .catch(error => console.error('Error:', error));
+    });
     $('.thumb-image').click(function(e) {
         e.preventDefault();
-
         var _url = $(this).attr('src');
-
         $('#big-img').attr('src', _url)
     })
 
+    function updateCart() {
+        $.ajax({
+            url: location.href, 
+            type: 'GET',
+            success: function(response) {
+                $('#shoping_cart').html($(response).find('#shoping_cart').html());
+            }
+        });
+    }
 </script>
 
 @stop()

@@ -55,10 +55,12 @@
                     @csrf @method('DELETE')
                     <button class="btn btn-sm btn-danger" onclick="return confirm('Are you suere wanto delete it?')"><i class="fa fa-trash"></i></button>
                 </form>
-                <form action="{{ route('contact.update', $model->id) }}" method="post">
+                @if( $model->status == 0)
+                <form action="{{ route('contact.update', $model->id) }}?status=1" method="post">
                     @csrf @method('put')
                     <button class="btn btn-sm btn-primary"><i class="fa-eye"></i></button>
                 </form>
+                @endif
             </td>
         </tr>
         @endforeach

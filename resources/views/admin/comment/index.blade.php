@@ -32,7 +32,7 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Product Name</th>
+            <th>Blog Name</th>
             <th>Customer Name</th>
             <th>Comment</th>
             <th>Created_at</th>
@@ -43,7 +43,7 @@
         @foreach ($data as $model)
         <tr>
             <td>{{ $model->id }}</td>
-            <td>{{ $model->prod->name }}</td>
+            <td>{{ $model->blog->name }}</td>
             <td>{{ $model->custm->name }}</td>
             <td>{{ $model->comment}} </td>
             <td>{{ $model->created_at->format('d/m/y') }}</td>

@@ -17,15 +17,26 @@ class ContactController extends Controller
         return view('admin.contact.index', compact('data'));
     }
 
+    public function update(Request $request, Contact $contact)
+    {
+        $status = request('status', 1);
+        //dd($status);
+        if ($contact->update(['status' => $status])) {
+            return redirect()->route('contact.index')->with('ok', 'Cập nhật trạng thái thanh công');
+        }
+        return redirect()->route('contact.index')->with('no', 'Không thể cập nhật trạng thái');
+    }
+     
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Contact $contact)
     {
-        if($contact->delete()){
-            return redirect()->route('contact.index')->with('ok','Delete a contact successffuly');
-        }else {
-            return redirect()->route('contact.index')->with('no','Something error, Please try again');
+        if ($contact->delete()) {
+            return redirect()->route('contact.index')->with('ok', 'Delete a contact successffuly');
+        } else {
+            return redirect()->route('contact.index')->with('no', 'Something error, Please try again');
         }
     }
 }

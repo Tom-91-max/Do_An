@@ -1,8 +1,8 @@
 @extends('master.main')
 @section('title', 'Trang chủ')
 @section('main')
- <!-- main-area -->
- <main>
+<!-- main-area -->
+<main>
 
     <!-- area-bg -->
     <div class="area-bg" data-background="uploads/bg/{{ $topBanner->image }}">
@@ -49,8 +49,8 @@
                                     @else
                                     <a title="Yêu thích" href="{{ route('home.favorite', $np->id) }}"><i class="far fa-heart"></i></a>
                                     @endif
-                                    <a title="Thêm vòa giỏ hàng" href="{{ route('cart.add', $np->id) }}"><i class="fa fa-shopping-cart"></i></a>
-
+                                    <button style="border: none; background-color: #fff;" class="add_to_cart" title="Thêm vòa giỏ hàng" href=""><i class="fa fa-shopping-cart"></i></button>
+                                    <input class="product_id" type="hidden" name="product_id" value="{{$np->id}}">
                                     @else
                                     <a title="Thêm vòa giỏ hàng" href="{{ route('account.login') }}" onclick="alert('vui lòng đăng nhập để thêm giỏ hàng')"><i class="fa fa-shopping-cart"></i></a>
 
@@ -59,9 +59,9 @@
 
                                 @if($np->sale_price > 0)
                                 <span><s>{{number_format($np->price)}}vnd</s></span>
-                                <span class="price">{{number_format($np->sale_price)}}vnd</span>
+                                <span class="price">{{number_format($np->sale_price)}} VND</span>
                                 @else
-                                <span class="price">{{number_format($np->price)}}vnd</span>
+                                <span class="price">{{number_format($np->price)}} VND</span>
                                 @endif
                             </div>
                             <div class="features-img">
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-            @foreach($sale_products as $sp)
+                @foreach($sale_products as $sp)
                 <div class="col-lg-4 col-md-6">
                     <div class="product-item">
                         <div class="product-img">
@@ -106,24 +106,25 @@
                             <div class="line" data-background="uploads/images/line.png"></div>
                             <h4 class="title"><a href="{{route('home.product', $sp->id)}}">{{$sp->name}}</a></h4>
                             @if($sp->sale_price > 0)
-                                <span ><s>${{number_format($sp->price)}}</s></span>
-                                <span class="price">${{number_format($sp->sale_price)}}</span>
-                                @else
-                                <span class="price">${{number_format($sp->price)}}</span>
-                                @endif
-                                @if(auth('cus')->check())
-                                        @if($np->favorited)
-                                        <a title="Bỏ thích" onclick="return confirm('Bạn có muốn bỏ thích không')" href="{{ route('home.favorite', $sp->id) }}"><i class="fas fa-heart"></i></a>
-                                        @else
-                                        <a title="Yêu thích" href="{{ route('home.favorite', $sp->id) }}"><i class="far fa-heart"></i></a>
-                                        @endif
+                            <span><s>{{number_format($sp->price)}} VND</s></span>
+                            <span class="price">{{number_format($sp->sale_price)}} VND</span>
+                            @else
+                            <span class="price">{{number_format($sp->price)}} VND</span>
+                            @endif
+                            @if(auth('cus')->check())
+                            @if($np->favorited)
+                            <a title="Bỏ thích" onclick="return confirm('Bạn có muốn bỏ thích không')" href="{{ route('home.favorite', $sp->id) }}"><i class="fas fa-heart"></i></a>
+                            @else
+                            <a title="Yêu thích" href="{{ route('home.favorite', $sp->id) }}"><i class="far fa-heart"></i></a>
+                            @endif
 
-                                        <a title="Thêm vòa giỏ hàng" href="{{ route('cart.add', $sp->id) }}"><i class="fa fa-shopping-cart"></i></a>
+                            <button style="border: none; background-color: #fff;" class="add_to_cart" title="Thêm vòa giỏ hàng" href=""><i class="fa fa-shopping-cart"></i></button>
+                            <input class="product_id" type="hidden" name="product_id" value="{{$sp->id}}">
 
-                                    @else
-                                    <a title="Thêm vòa giỏ hàng" href="{{ route('account.login') }}" onclick="alert('vui lòng đăng nhập để thêm giỏ hàng')"><i class="fa fa-shopping-cart"></i></a>
+                            @else
+                            <a title="Thêm vòa giỏ hàng" href="{{ route('account.login') }}" onclick="alert('vui lòng đăng nhập để thêm giỏ hàng')"><i class="fa fa-shopping-cart"></i></a>
 
-                                    @endif
+                            @endif
                         </div>
                         <div class="product-shape">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 401 314" preserveAspectRatio="none">
@@ -132,7 +133,7 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+                @endforeach
             </div>
         </div>
         <div class="shop-shape">
@@ -175,7 +176,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-            @foreach($feature_products as $fp)
+                @foreach($feature_products as $fp)
                 <div class="col-lg-6 col-md-10">
                     <div class="product-item-two">
                         <div class="product-img-two">
@@ -185,32 +186,33 @@
                             <div class="product-info">
                                 <h4 class="title"><a href="{{route('home.product', $fp->id)}}">{{ $fp->name }}</a></h4>
                                 @if(auth('cus')->check())
-                                        @if($np->favorited)
-                                        <a title="Bỏ thích" onclick="return confirm('Bạn có muốn bỏ thích không')" href="{{ route('home.favorite', $fp->id) }}"><i class="fas fa-heart"></i></a>
-                                        @else
-                                        <a title="Yêu thích" href="{{ route('home.favorite', $fp->id) }}"><i class="far fa-heart"></i></a>
-                                        @endif
+                                @if($np->favorited)
+                                <a title="Bỏ thích" onclick="return confirm('Bạn có muốn bỏ thích không')" href="{{ route('home.favorite', $fp->id) }}"><i class="fas fa-heart"></i></a>
+                                @else
+                                <a title="Yêu thích" href="{{ route('home.favorite', $fp->id) }}"><i class="far fa-heart"></i></a>
+                                @endif
 
-                                        <a title="Thêm vòa giỏ hàng" href="{{ route('cart.add', $fp->id) }}"><i class="fa fa-shopping-cart"></i></a>
+                                <button style="border: none; background-color: #fff;" class="add_to_cart" title="Thêm vòa giỏ hàng" href=""><i class="fa fa-shopping-cart"></i></button>
+                                <input class="product_id" type="hidden" name="product_id" value="{{$fp->id}}">
 
-                                    @else
-                                    <a title="Thêm vòa giỏ hàng" href="{{ route('account.login') }}" onclick="alert('vui lòng đăng nhập để thêm giỏ hàng')"><i class="fa fa-shopping-cart"></i></a>
+                                @else
+                                <a title="Thêm vòa giỏ hàng" href="{{ route('account.login') }}" onclick="alert('vui lòng đăng nhập để thêm giỏ hàng')"><i class="fa fa-shopping-cart"></i></a>
 
-                                    @endif
+                                @endif
                             </div>
                             <div class="product-price">
-                            @if($fp->sale_price > 0)
-                                <span ><s>${{number_format($fp->price)}}</s></span>
-                                <span class="price">${{number_format($fp->sale_price)}}</span>
+                                @if($fp->sale_price > 0)
+                                <span><s>{{number_format($fp->price)}} VND</s></span>
+                                <span class="price">{{number_format($fp->sale_price)}} VND</span>
                                 @else
-                                <span class="price">${{number_format($fp->price)}}</span>
+                                <span class="price">{{number_format($fp->price)}} VND</span>
                                 @endif
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
-            @endforeach
+                @endforeach
             </div>
             <div class="shop-now-btn text-center mt-40">
                 <a href="{{ route('home.category') }}" class="btn">Shop Now</a>
@@ -263,4 +265,55 @@
 </main>
 <!-- main-area-end -->
 
+@stop()
+
+@section('js')
+<script>
+    //PRD INFO
+    $(document).on('click', '.product-info button.add_to_cart', function() {
+        let prd_id = $(this).closest('.product-info').find('input.product_id').val();
+        let url = "{{ route('cart.add', ':prd_id') }}".replace(':prd_id', prd_id);
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                updateCart();
+            })
+            .catch(error => console.error('Error:', error));
+    });
+    // PRD CONTENT
+    $(document).on('click', '.product-content button.add_to_cart', function() {
+        let prd_id = $(this).closest('.product-content').find('input.product_id').val();
+        let url = "{{ route('cart.add', ':prd_id') }}".replace(':prd_id', prd_id);
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                updateCart();
+            })
+            .catch(error => console.error('Error:', error));
+    });
+    $(document).on('click', '.favorite-action button.add_to_cart', function() {
+        let prd_id = $(this).closest('.favorite-action').find('input.product_id').val();
+        let url = "{{ route('cart.add', ':prd_id') }}".replace(':prd_id', prd_id);
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                updateCart();
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+    function updateCart() {
+        $.ajax({
+            url: location.href,
+            type: 'GET',
+            success: function(response) {
+                $('#shoping_cart').html($(response).find('#shoping_cart').html());
+            }
+        });
+    }
+</script>
 @stop()

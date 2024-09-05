@@ -176,7 +176,7 @@ Create table order_details
 
 
 CREATE TABLE `contacts` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(100) DEFAULT NULL,
   `status` tinyint(1) DEFAULT '0',
   `email` varchar(100) DEFAULT NULL,

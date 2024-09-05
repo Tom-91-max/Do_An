@@ -23,17 +23,12 @@ class CartController extends Controller
             'product_id' => $product->id 
         ])->first();
         
-        // dd ($cartExist);
         if ($cartExist) {
             Cart::where([
                 'customer_id' => $cus_id,
                 'product_id' => $product->id 
             ])->increment('quantity', $quantity);
-
-            // $cartExist->update([
-            //     'quantity' => $cartExist->quantity + $quantity
-            // ]);
-            return redirect()->back()->with('ok','Update product quantity in cart successfully');;
+            return response()->json(['success' => true, 'message' => 'Update product quantity in cart successfully']);
         } else {
             $data = [
                 'customer_id' => auth('cus')->id(),
@@ -43,12 +38,10 @@ class CartController extends Controller
             ];
 
             if (Cart::create($data)) {
-                return redirect()->back()->with('ok','Add product to cart successfully');;
+                return response()->json(['success' => true, 'message' => 'Add product to cart successfully']);
             }
         }
-       
-        return redirect()->back()->with('no','Something error, please try again');
-       
+        return response()->json(['success' => false, 'message' => 'Something error, please try again']);
     }
 
     public function update(Product $product, Request $req) {
@@ -70,10 +63,10 @@ class CartController extends Controller
                 'quantity' => $quantity
             ]);
 
-            return redirect()->route('cart.index')->with('ok','Update product quantity in cart successfully');;
+            return response()->json(['success' => true, 'message' => 'Cart updated successfully']);
         } 
 
-        return redirect()->back()->with('no','Something error, please try again');
+        return response()->json(['success' => false, 'message' => 'error']);
     }
 
     public function delete($product_id) {
@@ -82,7 +75,7 @@ class CartController extends Controller
             'customer_id' => $cus_id,
             'product_id' => $product_id
         ])->delete();
-        return redirect()->back()->with('ok','Deleted product in shopping cart');
+        return response()->json(['success' => true, 'message' => 'Deleted product in shopping cart']);
     }
 
     public function clear() {

@@ -14,6 +14,7 @@ class CommentController extends Controller
     public function index()
     {
         $data = Comment::myFillter()->paginate(12);
+        // dd($data);
         return view('admin.comment.index', compact('data'));
     }
 

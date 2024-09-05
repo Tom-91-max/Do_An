@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                         <div class="shop-item-wrap">
                             <div class="row">
                                 @foreach($products as $prod)
@@ -63,30 +63,25 @@
                                             <a href="shop.html" class="tag">{{$prod->cat->name}}</a>
                                             <h2 class="title"><a href="{{route('home.product', $prod->id)}}">{{$prod->name}}</a></h2>
                                             @if($prod->sale_price > 0)
-                                            <span><s>${{number_format($prod->price)}}</s></span>
-                                            <span class="price">${{number_format($prod->sale_price)}}</span>
+                                            <span><s>{{number_format($prod->price)}} VND</s></span>
+                                            <span class="price">{{number_format($prod->sale_price)}} VND</span>
                                             @else
-                                            <span class="price">${{number_format($prod->price)}}</span>
+                                            <span class="price">{{number_format($prod->price)}} VND</span>
                                             @endif
                                             @if(auth('cus')->check())
-                                                    @if($prod->favorited)
-                                                    <a title="Bỏ thích" onclick="return confirm('Bạn có muốn bỏ thích không')" href="{{ route('home.favorite', $prod->id) }}"><i class="fas fa-heart"></i></a>
-                                                    @else
-                                                    <a title="Yêu thích" href="{{ route('home.favorite', $prod->id) }}"><i class="far fa-heart"></i></a>
-                                                    @endif
+                                            @if($prod->favorited)
+                                            <br><button style="border: none; background-color: #f1ece3;" title="Bỏ thích" onclick="return confirm('Bạn có muốn bỏ thích không')" href="{{ route('home.favorite', $prod->id) }}"><i class="fas fa-heart"></i></button>
+                                            @else
+                                            <br><button style="border: none; background-color: #f1ece3;" title="Yêu thích" href="{{ route('home.favorite', $prod->id) }}"><i class="far fa-heart"></i></button>
+                                            @endif
 
-                                                    <a title="Thêm vòa giỏ hàng" href="{{ route('cart.add', $prod->id) }}"><i class="fa fa-shopping-cart"></i></a>
+                                            <button class="add_to_cart" style="border: none; background-color: #f1ece3;" title="Thêm vòa giỏ hàng" href="{{ route('cart.add', $prod->id) }}"><i class="fa fa-shopping-cart"></i></button>
+                                            <input class="product_id" type="hidden" name="product_id" value="{{$prod->id}}">
+                                            @else
+                                            <a title="Thêm vòa giỏ hàng" href="{{ route('account.login') }}" onclick="alert('vui lòng đăng nhập để thêm giỏ hàng')"><i class="fa fa-shopping-cart"></i></a>
 
-                                                @else
-                                                <a title="Thêm vòa giỏ hàng" href="{{ route('account.login') }}" onclick="alert('vui lòng đăng nhập để thêm giỏ hàng')"><i class="fa fa-shopping-cart"></i></a>
-
-                                                @endif
+                                            @endif
                                             <div class="product-cart-wrap">
-                                                <form action="#">
-                                                    <div class="cart-plus-minus">
-                                                        <input type="text" value="1">
-                                                    </div>
-                                                </form>
                                             </div>
                                         </div>
                                         <div class="product-shape-two">
@@ -139,10 +134,10 @@
                                         <div class="lp-content">
                                             <h4 class="title"><a href="shop-details.html">{{$np->name}}</a></h4>
                                             @if($np->sale_price > 0)
-                                            <span><s>${{number_format($np->price)}}</s></span>
-                                            <span class="price">${{number_format($np->sale_price)}}</span>
+                                            <span><s>{{number_format($np->price)}} VND</s></span>
+                                            <span class="price">{{number_format($np->sale_price)}} VND</span>
                                             @else
-                                            <span class="price">${{number_format($np->price)}}</span>
+                                            <span class="price">{{number_format($np->price)}} VND</span>
                                             @endif
                                         </div>
                                     </div>
@@ -160,4 +155,30 @@
 </main>
 <!-- main-area-end -->
 
+@stop()
+
+@section('js')
+<script>
+    $(document).on('click', '.product-content-three button.add_to_cart', function() {
+        let prd_id = $(this).closest('.product-content-three').find('input.product_id').val();
+        let url = "{{ route('cart.add', ':prd_id') }}".replace(':prd_id', prd_id);
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                updateCart();
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+    function updateCart() {
+        $.ajax({
+            url: location.href,
+            type: 'GET',
+            success: function(response) {
+                $('#shoping_cart').html($(response).find('#shoping_cart').html());
+            }
+        });
+    }
+</script>
 @stop()

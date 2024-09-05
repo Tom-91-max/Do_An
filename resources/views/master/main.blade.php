@@ -101,7 +101,7 @@ function first_sentence($text)
                                 <div class="navbar-wrap main-menu d-none d-lg-flex">
                                     <ul class="navigation">
                                         <li class="active"><a href="{{ route('home.index')}}">Home</a></li>
-                                        <li class="menu-item-has-children"><a href="#">PRODUCTS</a>
+                                        <li class="menu-item-has-children"><a href="{{ route('home.category')}}">PRODUCTS</a>
                                             <ul class="sub-menu">
                                                 @foreach($cats_home as $cath)
                                                 <li><a href="{{ route('home.category', $cath->id)}}">{{$cath->name}}</a></li>
@@ -117,7 +117,7 @@ function first_sentence($text)
                                         <li class="header-search">
                                             <a href="#"><i class="flaticon-search"></i></a>
                                         </li>
-                                        <li class="header-shop-cart">
+                                        <li id="shoping_cart" class="header-shop-cart">
                                             <a href="{{route('cart.index')}}">
                                                 <i class="flaticon-shopping-basket"></i>
                                                 <span>{{$carts->sum('quantity')}}</span>
@@ -306,6 +306,7 @@ function first_sentence($text)
     <!-- footer-area-end -->
 
     <!-- JS here -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/imagesloaded.pkgd.min.js"></script>

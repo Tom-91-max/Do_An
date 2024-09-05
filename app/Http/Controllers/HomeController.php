@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index() {
+    public function index(Category $cat) {
         $topBanner = Banner::getBanner()->first();
         $gallerys = Banner::getBanner('gallery')->get();
         $news_products = Product::orderBy('created_at', 'DESC')->limit(2)->get();
@@ -24,8 +24,9 @@ class HomeController extends Controller
         
         $key = request('keyword');
         if($key){
-            $query = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
-            return view('home.category', compact('query'));
+            $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
+            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+            return view('home.category', compact('products', 'cat', 'news_products'));
         }
 
         return view('home.index', compact('topBanner','gallerys','news_products','sale_products','feature_products', 'lastest_news'));
@@ -35,20 +36,38 @@ class HomeController extends Controller
         if($cat->id){
             $products = $cat->products()->paginate(9);
         }
+        $key = request('keyword');
+        if($key){
+            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+        }
         $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
         return view('home.category', compact('cat','products','news_products'));
     }
 
-    public function product (Product $product)  {
+    public function product (Product $product, Category $cat)  {
+        $key = request('keyword');
+        if($key){
+            $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
+            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+            return view('home.category', compact('products', 'cat', 'news_products'));
+        }
         $related_prd = Product::paginate();
         $products = Product::where('category_id', $product->category_id)->limit(12)->get();
         return view('home.product', compact('product','products', 'related_prd')); 
     }
-    public function favorite ($product_id)  {
+    public function favorite ($product_id, Category $cat)  {
         $data = [
             'product_id' => $product_id,
             'customer_id' => auth('cus')->id()
         ];
+
+
+        $key = request('keyword');
+        if($key){
+            $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
+            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+            return view('home.category', compact('products', 'cat', 'news_products'));
+        }
 
         $favorited = Favorite::where(['product_id' => $product_id, 'customer_id' => auth('cus')->id()])->first();
         if($favorited) {
@@ -60,9 +79,17 @@ class HomeController extends Controller
             return redirect()->back()-> with('ok','Bạn đã yêu thích sản phẩm');
         }
 
+
+
     }
 
-    public function contact() {
+    public function contact(Category $cat) {
+        $key = request('keyword');
+        if($key){
+            $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
+            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+            return view('home.category', compact('products', 'cat', 'news_products'));
+        }
         return view('home.contact');
     }
     public function post_contact(Request $request) {
@@ -82,21 +109,51 @@ class HomeController extends Controller
 
         return view('home.contact');
     }
-    public function our_blog() {
+    public function our_blog(Category $cat) {
+        $key = request('keyword');
+        if($key){
+            $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
+            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+            return view('home.category', compact('products', 'cat', 'news_products'));
+        }
         $blogs = Blog::paginate();
         return view('home.our_blog', compact('blogs'));
     }
-    public function blog_details(Blog $blog) {
+    public function blog_details(Blog $blog, Category $cat) {
+        $key = request('keyword');
+        if($key){
+            $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
+            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+            return view('home.category', compact('products', 'cat', 'news_products'));
+        }
         $comments = Comment::where('blog_id', $blog->id)->orderBy('id', 'DESC')->get();
         return view('home.blog_details', compact('blog','comments'));
     }
-    public function services_details() {
+    public function services_details(Category $cat) {
+        $key = request('keyword');
+        if($key){
+            $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
+            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+            return view('home.category', compact('products', 'cat', 'news_products'));
+        }
         return view('home.services_details');
     }
-    public function services() {
+    public function services(Category $cat) {
+        $key = request('keyword');
+        if($key){
+            $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
+            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+            return view('home.category', compact('products', 'cat', 'news_products'));
+        }
         return view('home.services');
     }
-    public function team_details() {
+    public function team_details(Category $cat) {
+        $key = request('keyword');
+        if($key){
+            $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
+            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+            return view('home.category', compact('products', 'cat', 'news_products'));
+        }
         return view('home.team_details');
     }
 

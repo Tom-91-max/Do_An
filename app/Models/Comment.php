@@ -17,6 +17,9 @@ class Comment extends Model
     public function custm() {
         return $this->hasOne(Customer::class, 'id', 'customer_id');
     }
+    public function blog() {
+        return $this->hasOne(Blog::class, 'id', 'blog_id');
+    }
     
     public function scopeMyfillter($query){
         $key = request('keyword');
