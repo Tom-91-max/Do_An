@@ -67,7 +67,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li>
-            <a href="">
+            <a href="\admin">
               <i class="fa fa-home"></i> <span>Dashboard</span>
             </a>
           </li>
@@ -103,7 +103,7 @@
             <li><a href="{{ route('order.index') }}?status=3"><i class="fa fa-circle-o"></i> Đã hủy</a></li>
           </ul>
         </li>
-
+          @can('admin')
         <li class="treeview">
           <a href="#">
           <i class="fa fa-user"></i> <span>User</span> <i class="fa fa-angle-left pull-right"></i>
@@ -113,6 +113,7 @@
             <li><a href="{{ route('user.create') }}"><i class="fa fa-circle-o"></i> Add new</a></li>
           </ul>
         </li>
+        @endcan
         <li class="treeview">
           <a href="#">
           <i class="fa fa-th"></i> <span>Baner</span> <i class="fa fa-angle-left pull-right"></i>
@@ -122,6 +123,7 @@
             <li><a href="{{ route('banner.create') }}"><i class="fa fa-circle-o"></i> Add new</a></li>
           </ul>
         </li>
+        @canany(['admin', 'editor'])
         <li class="treeview">
           <a href="#">
           <i class="fa fa-user"></i> <span>Customer</span> <i class="fa fa-angle-left pull-right"></i>
@@ -131,6 +133,7 @@
             <li><a href="{{ route('customer.create') }}"><i class="fa fa-circle-o"></i> Add new</a></li>
           </ul>
         </li>
+        @endcanany
         <li class="treeview">
           <a href="#">
           <i class="fa fa-comment"></i> <span>Comment</span> <i class="fa fa-angle-left pull-right"></i>
@@ -139,6 +142,7 @@
             <li><a href="{{ route('comment.index') }}"><i class="fa fa-circle-o"></i> List</a></li>
           </ul>
         </li>
+        @can('admin')
         <li class="treeview">
           <a href="#">
           <i class="fa fa-comment"></i> <span>Contact</span> <i class="fa fa-angle-left pull-right"></i>
@@ -147,6 +151,7 @@
             <li><a href="{{ route('contact.index') }}"><i class="fa fa-circle-o"></i> List</a></li>
           </ul>
         </li>
+        @endcan
         <li class="treeview">
           <a href="#">
           <i class="fa fa-list"></i> <span>Blog</span> <i class="fa fa-angle-left pull-right"></i>

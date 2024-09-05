@@ -58,7 +58,9 @@
                 <form action="{{route('category.destroy', $cats->id)}}" method="POST">
                 @csrf @method('DELETE')
                 <a href="{{ route('category.edit', $cats->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                @canany(['admin', 'editor'])
                 <button href="" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                @endcanany
                 </form>
             </td>
         </tr>

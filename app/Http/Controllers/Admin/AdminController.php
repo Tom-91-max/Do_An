@@ -3,12 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
+use App\Models\Contact;
+use App\Models\Order;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function index() {
-        return view('admin.index');
+        $count_contact = Contact::where('status', 0)->count();
+        $count_order = Order::where('status', 0)->count();
+        $count_comment = Comment::whereDate('created_at', Carbon::today())->count();
+        $count_user = User::whereDate('created_at', Carbon::today())->count();
+        return view('admin.index', compact('count_contact', 'count_order', 'count_comment', 'count_user'));
     }
 
     public function login() {

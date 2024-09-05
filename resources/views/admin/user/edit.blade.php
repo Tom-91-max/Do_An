@@ -17,6 +17,29 @@
                 <input type="text" name="email" class="form-control" placeholder=" Email" value="{{$user -> email}}">
             </div>
             <div class="form-group">
+                <label for="">Role Management</label>
+
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="role" value="staff"  {{$user -> role == 'staff' ? 'checked' : ''}}/>
+                        Staff
+                    </label>
+                </div>
+
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="role" value="editor" {{$user -> role == 'editor' ? 'checked' : ''}}/>
+                        Editor
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="role" value="admin" {{$user -> role == 'admin' ? 'checked' : ''}}/>
+                        Admin
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="">User PassWord</label>
                 <input type="text" name="password" class="form-control" placeholder=" PassWord">
             </div>
@@ -24,6 +47,7 @@
                 <label for="">Comfirm PassWord</label>
                 <input type="text" name="re_password" class="form-control" placeholder=" Comfirm PassWord">
             </div>
+
             <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
         </div>
     </form>

@@ -7,10 +7,12 @@
     <a href="{{ route('order.update', $order->id) }}?status=3" class="btn btn-warning" onclick="return confirm('Bạn có chắc hành động này là gì?')">Hủy</a>
     @elseif ($order->status != 3 && $order->status != 2 && $order->status != 0)
     <a href="{{ route('order.update', $order->id) }}?status=2" class="btn btn-danger" onclick="return confirm('Bạn có chắc hành động này là gì?')">Đã giao hàng</a>
+    @canany(['admin', 'editor'])
     <a href="{{ route('order.update', $order->id) }}?status=3" class="btn btn-warning" onclick="return confirm('Bạn có chắc hành động này là gì?')">Hủy</a>
     @else
     <a href="{{ route('order.update', $order->id) }}?status=1" class="btn btn-warning" onclick="return confirm('Bạn có chắc hành động này là gì?')">Khôi phục</a>
     @endif
+    @endcanany
 <div class="row">
     <div class="col-md-6">
         <h3>Thông tin khách hàng</h3>

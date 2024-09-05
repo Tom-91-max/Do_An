@@ -61,7 +61,9 @@
                     @csrf @method('DELETE')
 
                     <a href="{{ route('blog.edit', $model->id) }}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                    @canany(['admin', 'editor'])
                     <button class="btn btn-sm btn-danger" onclick="return confirm('Are you suere wanto delete it?')"><i class="fa fa-trash"></i></button>
+                    @endcanany
                 </form>
             </td>
         </tr>

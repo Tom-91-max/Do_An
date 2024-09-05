@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductImage;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -45,7 +44,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users'
         ]);
 
-        $data = $request->only('name', 'email');
+        $data = $request->only('name', 'email', 'role');
         $data['password'] = bcrypt($request->password);
 
         if (User::create($data)) {
@@ -82,7 +81,7 @@ class UserController extends Controller
             'email' => 'required'
         ]);
 
-        $data = $request->only('name', 'email');
+        $data = $request->only('name', 'email', 'role');
         $data['password'] = bcrypt($request->password);
 
         if ($user->update($data)) {
