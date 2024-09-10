@@ -34,18 +34,27 @@
                             <div class="row align-items-center">
                                 <div class="col-md-6">
                                     <div class="shop-showing-result">
-                                        <p>Showing 1–09 of 20 results</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="shop-ordering">
-                                        <select name="orderby" class="orderby">
-                                            <option value="Default sorting">Sort by Top Rating</option>
-                                            <option value="Sort by popularity">Sort by popularity</option>
-                                            <option value="Sort by average rating">Sort by average rating</option>
-                                            <option value="Sort by latest">Sort by latest</option>
-                                            <option value="Sort by latest">Sort by latest</option>
-                                        </select>
+                                        <form action="" method="GET" class="form" role="form">
+
+                                            <div class="row">
+                                                <div class="col-xl-4 col-md-9">
+                                                    <select name="order" class="form-control">
+                                                        <option value="">Default</option>
+                                                        <option value="id-asc" {{request('order') == 'id-asc' ? 'selected' : ''}}>sort ascending by id</option>
+                                                        <option value="id-desc" {{request('order') == 'id-desc' ? 'selected' : ''}}>sort descending by id</option>
+                                                        <option value="name-asc" {{request('order') == 'name-asc' ? 'selected' : ''}}>sort ascending by name</option>
+                                                        <option value="name-desc" {{request('order') == 'name-desc' ? 'selected' : ''}}>sort descending by name</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xl-4 col-md-3">
+                                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -147,6 +156,7 @@
                         </div>
                     </div>
                 </div>
+                {{$products->links()}}
             </div>
         </div>
     </section>

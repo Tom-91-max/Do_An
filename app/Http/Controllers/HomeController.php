@@ -32,14 +32,16 @@ class HomeController extends Controller
         return view('home.index', compact('topBanner','gallerys','news_products','sale_products','feature_products', 'lastest_news'));
     }
     public function category (Category $cat)   {
-        $products = Product::paginate(9);
+        $products = Product::myFillter()->paginate(9);
+
+        // $products = Product::paginate(9);
         if($cat->id){
             $products = $cat->products()->paginate(9);
         }
-        $key = request('keyword');
-        if($key){
-            $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
-        }
+        // $key = request('keyword');
+        // if($key){
+        //     $products = Product::where('name', 'LIKE', '%'.$key.'%')->paginate();
+        // }
         $news_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
         return view('home.category', compact('cat','products','news_products'));
     }
@@ -55,6 +57,8 @@ class HomeController extends Controller
         $products = Product::where('category_id', $product->category_id)->limit(12)->get();
         return view('home.product', compact('product','products', 'related_prd')); 
     }
+
+    
     public function favorite ($product_id, Category $cat)  {
         $data = [
             'product_id' => $product_id,
